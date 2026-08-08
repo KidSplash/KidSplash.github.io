@@ -1,73 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
   <script>
-    function main(){
-      //Name, URL, Description, Last Checked, Founded
-      //ONLY APPEND, DO NOT CHANGE ORDER!!!!
-      const websites = [
-        ["Cave of Dragonflies", "https://www.dragonflycave.com", "A personal website by Butterfree about Pokemon, specificially Pokemon cheats and fanfiction by the author.", "July-31-2026", "November-2-2002"],
-      ];
-      
-      //Name, Aliases, Parent Of, Websites Of, Score (per website)
-      //0 = Not Related
-      //1 = Somewhat Related
-      //2 = Included
-      //5 = Main Genre
-      const tags = [
-        ["media", [], [1, 2, 3], []],
-        ["video", [], [7, 8], []],
-        ["audio", [], [31, 32, 33], []],
-        ["image", [], [4, 5, 6], []],
-        ["gif", [], [], []],
-        ["drawing", [], [9, 10], []],
-        ["photo", ["picture"], [], []],
-        ["animation", [], [], []],
-        ["live-action", [], [], []],
-        ["art", [], [], []],
-        ["fan-art", [], [], []],
-        ["blog", [], [12, 13], []],
-        ["microblog", [], [], []],
-        ["linklog", [], [], []],
-        ["journal", ["diary"], [], []],
-        ["newsletter", ["news"], [], []],
-        ["portfolio", [], [6, 9, 18], [[0, 1]]],
-        ["resume", [], [], []],
-        ["writing", [], [15, 19, 20], []],
-        ["novel", ["book", "story"], [20], [[0, 2]]],
-        ["fanfiction", [], [], [[0, 5]]],
-        ["wiki", ["dictionary"], [], []],
-        ["guestbook", ["log"], [], [[0, 1]]],
-        ["web-ring", [], [], []],
-        ["directory", [], [], []],
-        ["tutorial", [], [], []],
-        ["essay", [], ["review"], [[0, 2]]],
-        ["review", [], [], [[0, 2]]],
-        ["game", [], [34, 29, 35], []],
-        ["video-game", ["videogame"], [30], []],
-        ["pokemon", [], [], [[0, 5]]],
-        ["music", [], [], []],
-        ["sound-effect", [], [], []],
-        ["voice", [], [], []],
-        ["board-game", [], [], []],
-        ["card-game", [], [], []],
-      ];
+    //Name, Aliases, URL, Description, Last Checked, Founded, Added
+//ONLY APPEND, DO NOT CHANGE ORDER!!!!
+const websites = [
+  ["Cave of Dragonflies", ["Dragonfly"], "https://www.dragonflycave.com", "A personal website by Butterfree about Pokemon, specificially Pokemon cheats and fanfiction by the author.", "July-31-2026", "November-2-2002", "July-31-2026"],
+  //["Altered Origin", "https://alteredorigin.net", "A personal website by Phoenix about Pokemon. It shows off Phoenix's fanart and fanfics as well as showing a few pokemon inspired games and articles.", "July-31-2026", "December-03-2007", "July-31-2026"]
+];
+
+//Name, Aliases, Parent Of, Websites Of, Score (per website)
+//0 = Not Related
+//1 = Somewhat Related
+//2 = Included
+//5 = Main Genre
+const tags = [
+  ["media", [], [1, 2, 3], []],
+  ["video", [], [7, 8], []],
+  ["audio", [], [31, 32, 33], []],
+  ["image", [], [4, 5, 6], []],
+  ["gif", [], [], []],
+  ["drawing", [], [9, 10], []],
+  ["photo", ["picture"], [], []],
+  ["animation", [], [], []],
+  ["live-action", [], [], []],
+  ["art", [], [], []],
+  ["fan-art", [], [], []],
+  ["blog", [], [12, 13], []],
+  ["microblog", [], [], []],
+  ["linklog", [], [], []],
+  ["journal", ["diary"], [], []],
+  ["newsletter", ["news"], [], []],
+  ["portfolio", [], [6, 9, 18], [[0, 1]]],
+  ["resume", [], [], []],
+  ["writing", [], [15, 19, 20], []],
+  ["novel", ["book", "story"], [20], [[0, 2]]],
+  ["fanfiction", [], [], [[0, 5]]],
+  ["wiki", ["dictionary"], [], []],
+  ["guestbook", ["log"], [], [[0, 1]]],
+  ["web-ring", [], [], []],
+  ["directory", [], [], []],
+  ["tutorial", [], [], []],
+  ["essay", [], ["review"], [[0, 2]]],
+  ["review", [], [], [[0, 2]]],
+  ["game", [], [34, 29, 35], []],
+  ["video-game", ["videogame"], [30], []],
+  ["pokemon", [], [], [[0, 5]]],
+  ["music", [], [], []],
+  ["sound-effect", [], [], []],
+  ["voice", [], [], []],
+  ["board-game", [], [], []],
+  ["card-game", [], [], []],
+];
+
+const smallWords = [
+  "of"
+];
+
+function main(){
+}
+
+function nameChecker(words){
+  const chosen = [];
+  for(let a = 0; a < websites.length; a++){
+    const webName = websites[a][0].toLowerCase().split(" ");
+    let points = 0;
+    for(let b = 0; b < words.length; b++){
+      if(words[b].at(-1) == "s"){
+        words[b] = words[b].slice(0, -1);
+      }
+      if(webName.includes(words[b]) && ! smallWords.includes(words[b])){
+        points++;
+      }
     }
-    
-    function nameChecker(words){
-      
+    if(points != 0){
+      chosen.push([a, points]);
     }
-    
-    function tagChecker(words){
-      
+  }
+  return chosen;
+}
+
+/*function tagChecker(words){
+  const chosen = [];
+  for(let a = 0; a < words.length; a++){
+    words[a] = words[a].trim();
+    if(! smallWords.includes(words[a])){
+      if(words[a].at(-1) == "s"){
+        words[a] = words[a].slice(0, -1);
+      }
+      for(let b = 0; b < websites.length; b++){
+        if(words[a] == websites[b][0]){
+          chosen.push([b, points]);
+        }
+        for(let c = 0; c < websites[b][1].length; c++){
+          if(words[a] == websites[b][1][c]){
+            chosen.push([b, points]);
+          }
+        }
+      }
     }
-    
-    function ranker(){
-      
+  }
+  return chosen;
+}*///Under construction
+
+function ranker(chosen, oldChosen){
+  const newChosen = chosen[0];
+  const newPoints = chosen[1];
+  for(let a = 0; a < oldChosen.length; a++){
+    if(newChosen.includes(oldChosen[a][0])){
+      const index = newChosen.indexOf(oldChosen[a][0]);
+      newPoints[index] += oldChosen[a][1];
+    } else {
+      newChosen.push(oldChosen[a][0]);
+      newPoints.push(oldChosen[a][1]);
     }
-    
-    function search(words){
-      
-    }
+  }
+  return [newChosen, newPoints];
+}
+
+function search(words){
+  const wordsArray = words.toLowerCase().replaceAll("'", "").split(" ");
+  const namePoints = nameChecker(wordsArray);
+  const tagPoints = tagChecker(wordsArray);
+  let points = [];
+  let sites = [];
+  [sites, points] = ranker([sites, points], namePoints);
+  [sites, points] = ranker([sites, points], tagPoints);
+  console.log([sites, points])
+}
+search("Dragonfly Cave")
   </script>
   <body style="background-color:dodgerblue;">
     <div = style="text-align:center;">
